@@ -10,23 +10,25 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(colorScheme: .fromSeed(seedColor: Colors.deepPurple)),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      title: 'My First Flutter App',
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        useMaterial3: true,
+      ),
+      home: const CounterScreen(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
-
-  final String title;
+class CounterScreen extends StatefulWidget {
+  const CounterScreen({super.key});
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<CounterScreen> createState() => _CounterScreenState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _CounterScreenState extends State<CounterScreen> {
   int _counter = 0;
 
   void _incrementCounter() {
@@ -36,22 +38,21 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _decrementCounter() {
-    if (_counter == 0) {
-      return;
-    } else {
-      setState(() {
-        _counter--;
-      });
-    }
+    if (_counter == 0) return;
+
+    setState(() {
+      _counter--;
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.deepPurple.shade50,
       appBar: AppBar(
+        title: const Text('My First Flutter App'),
         backgroundColor: Colors.deepPurple,
         foregroundColor: Colors.white,
-        title: Text(widget.title),
       ),
       body: SafeArea(
         child: Stack(
@@ -60,19 +61,29 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Text('You have pushed the button this many times:'),
+                  const Text('You have pressed the button this many times:'),
                   Text(
                     '$_counter',
-                    style: Theme.of(context).textTheme.headlineMedium,
+                    style: const TextStyle(
+                      fontSize: 40,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ],
               ),
             ),
-            Align(
+            const Align(
               alignment: Alignment.bottomCenter,
               child: Padding(
-                padding: const EdgeInsets.only(bottom: 16.0),
-                child: const Text('Sherwin Sid S. Sañol'),
+                padding: EdgeInsets.only(bottom: 20.0),
+                child: Text(
+                  'Sherwin Sid S. Sañol',
+                  style: TextStyle(
+                    fontSize: 14,
+                    fontStyle: FontStyle.italic,
+                    color: Colors.deepPurple,
+                  ),
+                ),
               ),
             ),
           ],
@@ -80,19 +91,20 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       floatingActionButton: Column(
         mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           FloatingActionButton(
-            heroTag: 'decrement_button',
-            onPressed: _decrementCounter,
-            tooltip: 'Decrement',
-            child: const Icon(Icons.remove),
+            heroTag: 'increment',
+            onPressed: _incrementCounter,
+            backgroundColor: Colors.deepPurple,
+            child: const Icon(Icons.add),
           ),
           const SizedBox(height: 12),
           FloatingActionButton(
-            heroTag: 'increment_button',
-            onPressed: _incrementCounter,
-            tooltip: 'Increment',
-            child: const Icon(Icons.add),
+            heroTag: 'decrement',
+            onPressed: _decrementCounter,
+            backgroundColor: Colors.deepPurple.shade200,
+            child: const Icon(Icons.remove),
           ),
         ],
       ),
